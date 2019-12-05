@@ -16,7 +16,7 @@
 - [webpack.config.js](webpack.config.js)
 - [webpack.config.prod.js](webpack.config.prod.js)
 
-### Features
+### Setup
 1. [Webpack](https://webpack.js.org/guides/installation/) for bundling files
 2. [Webpack Dev Server](https://webpack.js.org/guides/development/) for reloading the page when changes are made
 3. [BabelLoader](https://www.npmjs.com/package/babel-loader) for transpiling ES6 to ES5
