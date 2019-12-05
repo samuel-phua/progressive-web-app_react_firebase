@@ -1,0 +1,34 @@
+{
+  "name": "progressive-web-app_react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://samuel-phua@github.com/samuel-phua/progressive-web-app_react.git",
+  "author": "Samuel Phua <samuel.phua.de.sheng@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.1",
+    "file-loader": "^5.0.2",
+    "fs-extra": "^8.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-manifest-plugin": "^2.2.0"
+  },
+  "scripts": {
+    "build": "node scripts/copy_assets.js && node_modules/.bin/webpack --config webpack.config.prod.js",
+    "start": "node_modules/.bin/webpack-dev-server"
+  }
+}
