@@ -1,21 +1,20 @@
-# progressive-web-app_react
-Create lightning fast web apps with native power using React and Firebase
+# Progressive Web App with React
 
 ### Project Structure
 - build
-- public
-  - assets
+- [public](public)
+  - [assets](public/assets)
   - index.html
-- scripts
-  - copy_assets.js
-- src
-  - components
-  - app.css
-  - App.js
-  - index.js
-- package.json
-- webpack.config.js
-- webpack.config.prod.js
+- [scripts](scripts)
+  - [copy_assets.js](scripts/copy_assets.js)
+- [src](src)
+  - [components](src/components)
+  - [app.css](src/app.css)
+  - [App.js](src/App.js)
+  - [index.js](src/index.js)
+- [package.json](package.json)
+- [webpack.config.js](webpack.config.js)
+- [webpack.config.prod.js](webpack.config.prod.js)
 
 ### Features
 1. [Webpack](https://webpack.js.org/guides/installation/) for bundling files
