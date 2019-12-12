@@ -4,7 +4,8 @@
 - build
 - [public](public)
   - [assets](public/assets)
-  - index.html
+  - [index.html](public/index.html)
+  - [secrets.example.js](public/secrets.example.js)
 - [scripts](scripts)
   - [copy_assets.js](scripts/copy_assets.js)
 - [src](src)
@@ -27,3 +28,4 @@
 8. [FileLoader](https://www.npmjs.com/package/file-loader) for copying assets required by JS code to build
 9. Custom [copy_assets.js](scripts/copy_assets.js) script to copy all assets to build
 10. [ManifestPlugin](https://www.npmjs.com/package/webpack-manifest-plugin) for generating a list of assets and saving it to build
+11. [Firebase](https://firebase.google.com/docs/web/setup) for backend infrastructure

@@ -62,3 +62,10 @@ typings/
 
 # build folder
 build
+
+# secrets file
+public/secrets.js
+
+# Firebase
+.firebase
+functions
