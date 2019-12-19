@@ -18,6 +18,7 @@ class App extends Component {
       if (user) {
         this.setState({ user });
       }
+      // firebase.auth().signOut();
     });
   }
 }
