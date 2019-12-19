@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import Header from "./Header";
 
-class LoginContainer extends Component {
+export default class LoginContainer extends Component {
+  createUserProfile = async () => {
+
+  };
+
+  getUserProfile = async () => {
+
+  };
+
   render() {
     return (
       <div id="LoginContainer" className="inner-container">
@@ -16,33 +24,35 @@ class LoginContainer extends Component {
     const googleSignInOption = {
       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       scopes: [
-        "https://www.googleapis.com/auth/contacts.readonly",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile openid",
+        // "https://www.googleapis.com/auth/contacts.readonly",
       ],
       customParameters: {
         // Forces account selection even when one account
         // is available.
-        prompt: "select_account"
-      }
+        prompt: "select_account",
+      },
     };
     const facebookSignInOption = {
       provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       scopes: [
         "public_profile",
         "email",
-        "user_likes",
-        "user_friends"
+        // "user_likes",
+        // "user_friends",
       ],
       customParameters: {
         // Forces password re-entry.
-        auth_type: "reauthenticate"
-      }
+        auth_type: "reauthenticate",
+      },
     };
     const phoneSignInOption = {
       provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
       recaptchaParameters: {
         type: "image", // 'audio'
         size: "normal", // 'invisible' or 'compact'
-        badge: "bottomleft" //' bottomright' or 'inline' applies to invisible.
+        badge: "bottomleft", //' bottomright' or 'inline' applies to invisible.
       },
       defaultCountry: "SG", // Set default country to the United Kingdom (+44).
       // For prefilling the national number, set defaultNationNumber.
@@ -60,7 +70,7 @@ class LoginContainer extends Component {
       // will always have higher priority than 'loginHint' which will be ignored
       // in their favor. In this case, the default country will be 'GB' even
       // though 'loginHint' specified the country code as '+1'.
-      loginHint: "+6598765432"
+      loginHint: "+6598765432",
     };
     const emailSignInOption = {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -68,29 +78,44 @@ class LoginContainer extends Component {
     };
     const uiConfig = {
       callbacks: {
-        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+        signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
           // User successfully signed in.
-          // Return type determines whether we continue the redirect automatically
-          // or whether we leave that to developer to handle.
+          // Show the loader.
           document.getElementById("loader").style.display = "initial";
           console.log("auth result", authResult);
           console.log("redirect", redirectUrl);
           // authResult.operationType === "signIn"
-          // authResult.additionalUserInfo.providerId === "phone"
+          // authResult.additionalUserInfo.providerId === "phone" // "password", "google.com"
           // authResult.additionalUserInfo.isNewUser === false
+          // authResult.additionalUserInfo.profile.name // for google.com
+          // authResult.additionalUserInfo.profile.given_name // for google.com
+          // authResult.additionalUserInfo.profile.family_name // for google.com
+          // authResult.credential.idToken // for google.com
+          // authResult.credential.accessToken // for google.com
+          // authResult.credential.providerId === "google.com"
+          // authResult.credential.signInMethod === "google.com"
           // authResult.user.uid
           // authResult.user.refreshToken
           // authResult.user.displayName
           // authResult.user.email
           // authResult.user.emailVerified === true
           // authResult.user.phoneNumber
+          if (authResult.additionalUserInfo.isNewUser === true) {
+            await this.createUserProfile();
+            this.props.history.push("/profile");
+          } else {
+            await this.getUserProfile();
+            this.props.history.push("/");
+          }
+          // Return type determines whether we continue the redirect automatically
+          // or whether we leave that to developer to handle.
           return false;
         },
         uiShown: () => {
           // The widget is rendered.
           // Hide the loader.
           document.getElementById("loader").style.display = "none";
-        }
+        },
       },
       // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
       signInFlow: "popup",
@@ -100,16 +125,12 @@ class LoginContainer extends Component {
         phoneSignInOption,
         emailSignInOption,
       ],
-      signInSuccessUrl: "https://www.example.com",
+      // signInSuccessUrl: "https://www.example.com",
       // Terms of service url.
       tosUrl: "https://www.example.com",
       // Privacy policy url.
       privacyPolicyUrl: "https://www.example.com",
     };
-    // Initialize the FirebaseUI Widget using Firebase.
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start("#firebaseui-auth-container", uiConfig);
+    window.ui.start("#firebaseui-auth-container", uiConfig);
   }
 }
-
-export default LoginContainer;

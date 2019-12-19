@@ -14,3 +14,5 @@ window.firebase = firebase;
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.auth().languageCode = "en";
+// Initialize the FirebaseUI Widget using Firebase.
+window.ui = new firebaseui.auth.AuthUI(firebase.auth());
