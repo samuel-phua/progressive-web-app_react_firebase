@@ -20,5 +20,20 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
     <script src="/init-firebase.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker.register("firebase-messaging-sw.js").then(function(registration) {
+            // Registration was successful
+            console.log("Registered!");
+          }, function(err) {
+            // Registration failed
+            console.log("ServiceWorker registration failed: ", err);
+          })
+        });
+      } else {
+        console.log("service worker is not supported.");
+      }
+    </script>
   </body>
 </html>
