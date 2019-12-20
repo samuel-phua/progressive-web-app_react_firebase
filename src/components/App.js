@@ -6,7 +6,7 @@ import UserContainer from "./UserContainer";
 import "./app.css";
 
 class App extends Component {
-  state = { user: null, messages: [] };
+  state = { user: null, messages: [], messagesLoaded: false };
 
   handleSubmitMessage = (msg) => {
     const data = {
@@ -37,6 +37,7 @@ class App extends Component {
             onSubmit={this.handleSubmitMessage}
             user={this.state.user}
             messages={this.state.messages}
+            messagesLoaded={this.state.messagesLoaded}
           />)} />
         <Route path="/login" component={LoginContainer} />
         <Route path="/users/:userId" component={UserContainer} />
@@ -54,6 +55,9 @@ class App extends Component {
     });
     window.db.collection("messages").orderBy("timestamp", "asc").onSnapshot((snapshot) => {
       this.onMessage(snapshot);
+      if (!this.state.messagesLoaded) {
+        this.setState({ messagesLoaded: true });
+      }
     });
   }
 }
