@@ -52,7 +52,7 @@ class App extends Component {
         this.props.history.push("/login");
       }
     });
-    window.db.collection("messages").onSnapshot((snapshot) => {
+    window.db.collection("messages").orderBy("timestamp", "asc").onSnapshot((snapshot) => {
       this.onMessage(snapshot);
     });
   }
