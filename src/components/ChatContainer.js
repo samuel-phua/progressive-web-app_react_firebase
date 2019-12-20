@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ReactDOM from "react-dom";
 import Header from "./Header";
 
 export default class ChatContainer extends Component {
@@ -20,7 +21,7 @@ export default class ChatContainer extends Component {
   handleLogout = () => {
     firebase.auth().signOut();
   };
-  getAuthor = (msg, nextMsg) => {
+  renderAuthor = (msg, nextMsg) => {
     if (!nextMsg || nextMsg.author !== msg.author) {
       return (
         <p className="author">
@@ -35,11 +36,11 @@ export default class ChatContainer extends Component {
         <Header>
           <button className="red" onClick={this.handleLogout}>Logout</button>
         </Header>
-        <div id="message-container">
+        <div id="message-container" ref={element => { this.messageContainer = element }}>
           {this.props.messages.map((msg, i) => (
             <div key={msg.id} className={`message ${this.props.user.email === msg.author && "mine"}`}>
               <p>{msg.msg}</p>
-              {this.getAuthor(msg, this.props.messages[i + 1])}
+              {this.renderAuthor(msg, this.props.messages[i + 1])}
             </div>
           ))}
         </div>
@@ -58,4 +59,18 @@ export default class ChatContainer extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  componentDidUpdate(previousProps) {
+    if (previousProps.messages.length !== this.props.messages.length) {
+      this.scrollToBottom();
+    }
+  }
+  scrollToBottom = () => {
+    const messageContainer = ReactDOM.findDOMNode(this.messageContainer);
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  };
 }
