@@ -32,6 +32,7 @@ class App extends Component {
   render() {
     return (
       <div id="container" className="inner-container">
+        <Route path="/login" component={LoginContainer} />
         <Route exact path="/" render={() => (
           <ChatContainer
             onSubmit={this.handleSubmitMessage}
@@ -39,8 +40,12 @@ class App extends Component {
             messages={this.state.messages}
             messagesLoaded={this.state.messagesLoaded}
           />)} />
-        <Route path="/login" component={LoginContainer} />
-        <Route path="/users/:userId" component={UserContainer} />
+        <Route path="/users/:userId" render={({ history, match }) => (
+          <UserContainer
+            messages={this.state.messages}
+            messagesLoaded={this.state.messagesLoaded}
+            userId={match.params.userId}
+          />)} />
       </div>
     );
   }
