@@ -16,3 +16,5 @@ firebase.analytics();
 firebase.auth().languageCode = "en";
 // Initialize the FirebaseUI Widget using Firebase.
 window.ui = new firebaseui.auth.AuthUI(firebase.auth());
+// Initialize Cloud Firestore through Firebase
+window.db = firebase.firestore();

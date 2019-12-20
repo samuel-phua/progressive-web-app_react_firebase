@@ -16,14 +16,15 @@ class App extends Component {
       timestamp: Date.now(),
     };
     // Send to database
-    firebase.database().ref("messages/").push(data);
+    window.db.collection("messages").add(data);
   };
 
   onMessage = (snapshot) => {
-    const messages = Object.keys(snapshot.val()).map(key => {
-      const msg = snapshot.val()[key];
-      msg.id = key;
-      return msg;
+    var messages = [];
+    snapshot.forEach((doc) => {
+      var msg = doc.data();
+      msg.id = doc.id;
+      messages.push(msg);
     });
     this.setState({ messages });
   };
@@ -51,7 +52,7 @@ class App extends Component {
         this.props.history.push("/login");
       }
     });
-    firebase.database().ref("/messages").on("value", (snapshot) => {
+    window.db.collection("messages").onSnapshot((snapshot) => {
       this.onMessage(snapshot);
     });
   }

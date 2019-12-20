@@ -27,14 +27,14 @@ export default class ChatContainer extends Component {
           <button className="red" onClick={this.handleLogout}>Logout</button>
         </Header>
         <div id="message-container">
-          {this.props.messages.map(msg => {
+          {this.props.messages.map(msg => (
             <div key={msg.id} className={`message ${this.props.user.email === msg.author && "mine"}`}>
               <p>{msg.msg}</p>
               <p className="author">
                 <Link to={`/users/${msg.user_id}`}>{msg.author}</Link>
               </p>
             </div>
-          })}
+          ))}
         </div>
         <div id="chat-input">
           <textarea
