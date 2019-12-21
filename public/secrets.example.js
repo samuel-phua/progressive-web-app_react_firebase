@@ -3,3 +3,4 @@ window.projectId = "";
 window.messagingSenderId = "";
 window.appId = "";
 window.measurementId = "";
+window.publicVapidKey = "";

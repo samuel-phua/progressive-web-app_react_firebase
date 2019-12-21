@@ -20,6 +20,15 @@ class App extends Component {
     window.db.collection("messages").add(data);
   };
 
+  listenForMessages = () => {
+    window.db.collection("messages").orderBy("timestamp", "asc").onSnapshot((snapshot) => {
+      this.onMessage(snapshot);
+      if (!this.state.messagesLoaded) {
+        this.setState({ messagesLoaded: true });
+      }
+    });
+  };
+
   onMessage = (snapshot) => {
     var messages = [];
     snapshot.forEach((doc) => {
@@ -55,17 +64,13 @@ class App extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
+        this.listenForMessages();
+        this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
+        this.notifications.changeUser(user);
       } else {
         this.props.history.push("/login");
       }
     });
-    window.db.collection("messages").orderBy("timestamp", "asc").onSnapshot((snapshot) => {
-      this.onMessage(snapshot);
-      if (!this.state.messagesLoaded) {
-        this.setState({ messagesLoaded: true });
-      }
-    });
-    this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
   }
 }
 

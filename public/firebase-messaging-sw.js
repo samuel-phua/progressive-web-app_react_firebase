@@ -12,7 +12,7 @@ firebase.initializeApp({
   appId: window.appId,
   measurementId: window.measurementId,
 });
-console.log(firebase.messaging());
+console.log("firebase messaging", firebase.messaging());
 self.addEventListener("install", function() {
   console.log("Install!");
 });

@@ -18,3 +18,5 @@ firebase.auth().languageCode = "en";
 window.ui = new firebaseui.auth.AuthUI(firebase.auth());
 // Initialize Cloud Firestore through Firebase
 window.db = firebase.firestore();
+// Add the public key generated from the console here.
+firebase.messaging().usePublicVapidKey(window.publicVapidKey);

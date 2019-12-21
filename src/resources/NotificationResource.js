@@ -1,6 +1,7 @@
 export default class NotificationResource {
   allTokens = [];
   tokensLoaded = false;
+  user = null;
 
   constructor(messaging, database) {
     console.log("Instantiated!");
@@ -23,6 +24,7 @@ export default class NotificationResource {
         token.id = doc.id;
         tokens.push(token);
       });
+      console.log("tokens", tokens);
       this.allTokens = tokens;
       this.tokensLoaded = true;
     });
@@ -34,16 +36,26 @@ export default class NotificationResource {
     });
   }
 
+  changeUser(user) {
+    this.user = user;
+    this.saveTokenToServer();
+  }
+
   saveTokenToServer() {
     this.messaging.getToken().then((res) => {
+      console.log("get token", res);
       if (this.tokensLoaded) {
         const existingToken = this.findExistingToken(res);
+        console.log("existing token", existingToken);
         if (existingToken) {
-          // Replace existing token
+          const tokenId = this.allTokens[existingToken].id;
+          this.replaceToken(tokenId, res);
         } else {
-          // Create a new one
+          this.registerToken(res);
         }
       }
+    }).catch((err) => {
+      console.log("get token err: ", err);
     });
   }
 
@@ -56,5 +68,28 @@ export default class NotificationResource {
       }
     }
     return false;
+  }
+
+  replaceToken(tokenId, token) {
+    this.database.collection("fcmTokens").doc(tokenId).update({
+      token,
+      user_id: this.user.uid,
+    }).then(() => {
+      console.log("Document successfully updated!");
+    }).catch((err) => {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", err);
+    });
+  }
+
+  registerToken(token) {
+    this.database.collection("fcmTokens").add({
+      token,
+      user_id: this.user.uid,
+    }).then((docRef) => {
+      console.log("token registered with id: ", docRef.id);
+    }).catch((err) => {
+      console.log("register token err: ", err);
+    });
   }
 }
