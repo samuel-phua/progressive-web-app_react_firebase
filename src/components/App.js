@@ -4,6 +4,7 @@ import LoginContainer from "./LoginContainer";
 import ChatContainer from "./ChatContainer";
 import UserContainer from "./UserContainer";
 import "./app.css";
+import NotificationResource from "../resources/NotificationResource";
 
 class App extends Component {
   state = { user: null, messages: [], messagesLoaded: false };
@@ -64,6 +65,7 @@ class App extends Component {
         this.setState({ messagesLoaded: true });
       }
     });
+    this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
   }
 }
 
