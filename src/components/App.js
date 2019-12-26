@@ -18,6 +18,13 @@ class App extends Component {
     };
     // Send to database
     window.db.collection("messages").add(data);
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then(choice => {
+        console.log(choice);
+      });
+      this.deferredPrompt = null;
+    }
   };
 
   listenForMessages = () => {
@@ -26,6 +33,16 @@ class App extends Component {
       if (!this.state.messagesLoaded) {
         this.setState({ messagesLoaded: true });
       }
+    });
+    this.listenForInstallBanner();
+  };
+
+  listenForInstallBanner = () => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      console.log("beforeinstallprompt Event fired");
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.deferredPrompt = e;
     });
   };
 
