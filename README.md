@@ -33,3 +33,4 @@
 11. [Firebase](https://firebase.google.com/docs/web/setup) for backend infrastructure
 12. [React Router DOM](https://reacttraining.com/react-router/web/guides/quick-start) for routing
 13. [Babel Polyfill](https://www.npmjs.com/package/@babel/polyfill) for async/await
+14. [Syntax Dynamic Import Plugin](https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import) for code splitting

@@ -6,6 +6,8 @@ module.exports = {
     "react-hot-loader/patch",
     "webpack-dev-server/client?http://localhost:8080",
     "webpack/hot/only-dev-server",
+    "core-js/modules/es.promise",
+    "core-js/modules/es.array.iterator",
     __dirname + "/src/index.js",
   ],
   output: {
@@ -22,7 +24,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties", "react-hot-loader/babel"],
+            plugins: ["@babel/plugin-proposal-class-properties", "react-hot-loader/babel", "@babel/plugin-syntax-dynamic-import"],
           },
         },
       },

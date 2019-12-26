@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
+import AsyncComponent from "./AsyncComponent";
 import LoginContainer from "./LoginContainer";
 import ChatContainer from "./ChatContainer";
 import UserContainer from "./UserContainer";
@@ -56,7 +57,20 @@ class App extends Component {
     this.setState({ messages });
   };
 
+  loadLogin = () => {
+    return import("./LoginContainer").then(module => module.default);
+  };
+  loadChat = () => {
+    return import("./ChatContainer").then(module => module.default);
+  };
+  loadUser = () => {
+    return import("./UserContainer").then(module => module.default);
+  };
+
   render() {
+    const LoginContainer = AsyncComponent(this.loadLogin);
+    const ChatContainer = AsyncComponent(this.loadChat);
+    const UserContainer = AsyncComponent(this.loadUser);
     return (
       <div id="container" className="inner-container">
         <Route path="/login" component={LoginContainer} />
@@ -78,17 +92,22 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         console.log("auth change", user);
         this.setState({ user });
         this.listenForMessages();
-        this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
         this.notifications.changeUser(user);
       } else {
         this.props.history.push("/login");
       }
     });
+    this.listenForMessages();
+    this.listenForInstallBanner();
+    this.loadChat();
+    this.loadLogin();
+    this.loadUser();
   }
 }
 

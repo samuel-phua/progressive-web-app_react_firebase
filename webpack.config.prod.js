@@ -4,11 +4,32 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 module.exports = {
   mode: "production",
-  entry: __dirname + "/src/index.js",
+  entry: [
+    "core-js/modules/es.promise",
+    "core-js/modules/es.array.iterator",
+    __dirname + "/src/index.js",
+  ],
   output: {
     path: __dirname + "/build",
-    filename: "bundle.js",
+    filename: "static/js/[name].[hash:8].js", //"bundle.js",
+    chunkFilename: "static/js/[name].[hash:8].chunk.js",
     publicPath: "./",
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2,
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -19,7 +40,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties", "react-hot-loader/babel"],
+            plugins: ["@babel/plugin-proposal-class-properties", "react-hot-loader/babel", "@babel/plugin-syntax-dynamic-import"],
           },
         },
       },
