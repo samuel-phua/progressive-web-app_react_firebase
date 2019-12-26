@@ -39,7 +39,7 @@ export default class ChatContainer extends Component {
         {this.props.messagesLoaded ? (
           <div id="message-container" ref={element => { this.messageContainer = element }}>
             {this.props.messages.map((msg, i) => (
-              <div key={msg.id} className={`message ${this.props.user.email === msg.author && "mine"}`}>
+              <div key={msg.id} className={`message ${(this.props.user.email === msg.author || this.props.user.phoneNumber === msg.author) && "mine"}`}>
                 <p>{msg.msg}</p>
                 {this.renderAuthor(msg, this.props.messages[i + 1])}
               </div>

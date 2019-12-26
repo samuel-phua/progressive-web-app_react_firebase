@@ -12,7 +12,7 @@ class App extends Component {
   handleSubmitMessage = (msg) => {
     const data = {
       msg,
-      author: this.state.user.email,
+      author: this.state.user.email ? this.state.user.email : this.state.user.phoneNumber,
       user_id: this.state.user.uid,
       timestamp: Date.now(),
     };
@@ -63,6 +63,7 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log("auth change", user);
         this.setState({ user });
         this.listenForMessages();
         this.notifications = new NotificationResource(firebase.messaging(), firebase.firestore());
