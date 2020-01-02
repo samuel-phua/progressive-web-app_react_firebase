@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
 import Loadable from "react-loadable";
-import Loading from "./Loading";
+import PageLoading from "./PageLoading";
 import NotificationResource from "../resources/NotificationResource";
 import "./app.css";
 
@@ -58,15 +58,15 @@ class App extends Component {
   render() {
     const LoginContainer = Loadable({
       loader: () => import(/* webpackChunkName: "login" */ "./LoginContainer"),
-      loading: Loading,
+      loading: PageLoading,
     });
     const ChatContainer = Loadable({
       loader: () => import(/* webpackChunkName: "chat" */ "./ChatContainer"),
-      loading: Loading,
+      loading: PageLoading,
     });
     const UserContainer = Loadable({
       loader: () => import(/* webpackChunkName: "user" */ "./UserContainer"),
-      loading: Loading,
+      loading: PageLoading,
     });
     return (
       <div id="container" className="inner-container">

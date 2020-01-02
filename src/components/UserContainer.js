@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./Loading";
 
 export default class UserContainer extends Component {
   renderedUserEmail = false;
@@ -33,11 +34,7 @@ export default class UserContainer extends Component {
               }
             })}
           </div>
-        ) : (
-          <div id="loading-container">
-            <img src="/assets/icon.png" alt="logo" id="loader" />
-          </div>
-        )}
+        ) : <Loading />}
       </div>
     );
   }

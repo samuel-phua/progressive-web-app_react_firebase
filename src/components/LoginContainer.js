@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./Header";
+import Loading from "./Loading";
 
 export default class LoginContainer extends Component {
   createUserProfile = async () => {
@@ -14,7 +15,7 @@ export default class LoginContainer extends Component {
     return (
       <div id="LoginContainer" className="inner-container">
         <Header />
-        <div id="loader">Loading ...</div>
+        <Loading />
         <div id="firebaseui-auth-container"></div>
       </div>
     );
@@ -81,7 +82,7 @@ export default class LoginContainer extends Component {
         signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
           // User successfully signed in.
           // Show the loader.
-          document.getElementById("loader").style.display = "initial";
+          document.getElementById("loading-container").style.display = "initial";
           console.log("auth result", authResult);
           console.log("redirect", redirectUrl);
           // authResult.operationType === "signIn"
@@ -114,7 +115,7 @@ export default class LoginContainer extends Component {
         uiShown: () => {
           // The widget is rendered.
           // Hide the loader.
-          document.getElementById("loader").style.display = "none";
+          document.getElementById("loading-container").style.display = "none";
         },
       },
       // Will use popup for IDP Providers sign-in flow instead of the default, redirect.

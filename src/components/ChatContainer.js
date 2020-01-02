@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Header from "./Header";
+import Loading from "./Loading";
 
 export default class ChatContainer extends Component {
   state = { newMessage: "" };
@@ -45,11 +46,7 @@ export default class ChatContainer extends Component {
               </div>
             ))}
           </div>
-        ) : (
-          <div id="loading-container">
-            <img src="/assets/icon.png" alt="logo" id="loader" />
-          </div>
-        )}
+        ) : <Loading />}
         <div id="chat-input">
           <textarea
             placeholder="Add your message ..."
