@@ -71,18 +71,20 @@ class App extends Component {
     return (
       <div id="container" className="inner-container">
         <Route path="/login" component={LoginContainer} />
-        <Route exact path="/" render={() => (
+        <Route exact path="/" render={(props) => (
           <ChatContainer
+            {...props}
             onSubmit={this.handleSubmitMessage}
             user={this.state.user}
             messages={this.state.messages}
             messagesLoaded={this.state.messagesLoaded}
           />)} />
-        <Route path="/users/:userId" render={({ history, match }) => (
+        <Route path="/users/:userId" render={(props) => (
           <UserContainer
+            {...props}
             messages={this.state.messages}
             messagesLoaded={this.state.messagesLoaded}
-            userId={match.params.userId}
+            userId={props.match.params.userId}
           />)} />
       </div>
     );
