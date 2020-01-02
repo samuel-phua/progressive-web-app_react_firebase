@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: __dirname + "/build",
     filename: "static/js/[name].[hash:8].js",
-    chunkFilename: "static/js/[name].[hash:8].chunk.js",
+    chunkFilename: "static/js/[name].[chunkhash:8].js",
     publicPath: "./",
   },
   optimization: {

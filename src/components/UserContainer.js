@@ -7,7 +7,9 @@ export default class UserContainer extends Component {
   renderAuthor = (author) => {
     if (!this.renderedUserEmail) {
       this.renderedUserEmail = true;
-      return <p className="author">{author}</p>;
+      return (
+        <p className="author">{author}</p>
+      );
     }
   };
   render() {

@@ -57,15 +57,15 @@ class App extends Component {
 
   render() {
     const LoginContainer = Loadable({
-      loader: () => import("./LoginContainer"),
+      loader: () => import(/* webpackChunkName: "login" */ "./LoginContainer"),
       loading: Loading,
     });
     const ChatContainer = Loadable({
-      loader: () => import("./ChatContainer"),
+      loader: () => import(/* webpackChunkName: "chat" */ "./ChatContainer"),
       loading: Loading,
     });
     const UserContainer = Loadable({
-      loader: () => import("./UserContainer"),
+      loader: () => import(/* webpackChunkName: "user" */ "./UserContainer"),
       loading: Loading,
     });
     return (
