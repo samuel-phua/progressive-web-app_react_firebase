@@ -27,7 +27,7 @@ module.exports = {
         },
         common: {
           name: "common",
-          minChunk: 2,
+          minChunks: 2,
           chunks: "async",
           priority: 10,
           reuseExistingChunk: true,
