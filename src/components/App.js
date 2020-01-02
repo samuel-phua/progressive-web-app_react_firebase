@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
-import AsyncComponent from "./AsyncComponent";
-import LoginContainer from "./LoginContainer";
-import ChatContainer from "./ChatContainer";
-import UserContainer from "./UserContainer";
-import "./app.css";
+import Loadable from "react-loadable";
+import Loading from "./Loading";
 import NotificationResource from "../resources/NotificationResource";
+import "./app.css";
 
 class App extends Component {
   state = { user: null, messages: [], messagesLoaded: false };
@@ -57,20 +55,19 @@ class App extends Component {
     this.setState({ messages });
   };
 
-  loadLogin = () => {
-    return import("./LoginContainer").then(module => module.default);
-  };
-  loadChat = () => {
-    return import("./ChatContainer").then(module => module.default);
-  };
-  loadUser = () => {
-    return import("./UserContainer").then(module => module.default);
-  };
-
   render() {
-    const LoginContainer = AsyncComponent(this.loadLogin);
-    const ChatContainer = AsyncComponent(this.loadChat);
-    const UserContainer = AsyncComponent(this.loadUser);
+    const LoginContainer = Loadable({
+      loader: () => import("./LoginContainer"),
+      loading: Loading,
+    });
+    const ChatContainer = Loadable({
+      loader: () => import("./ChatContainer"),
+      loading: Loading,
+    });
+    const UserContainer = Loadable({
+      loader: () => import("./UserContainer"),
+      loading: Loading,
+    });
     return (
       <div id="container" className="inner-container">
         <Route path="/login" component={LoginContainer} />
@@ -105,9 +102,6 @@ class App extends Component {
     });
     this.listenForMessages();
     this.listenForInstallBanner();
-    this.loadChat();
-    this.loadLogin();
-    this.loadUser();
   }
 }
 

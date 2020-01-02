@@ -11,22 +11,27 @@ module.exports = {
   ],
   output: {
     path: __dirname + "/build",
-    filename: "static/js/[name].[hash:8].js", //"bundle.js",
+    filename: "static/js/[name].[hash:8].js",
     chunkFilename: "static/js/[name].[hash:8].chunk.js",
     publicPath: "./",
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
-        commons: {
-          name: "commons",
-          chunks: "initial",
-          minChunks: 2,
-        },
+        default: false,
+        vendors: false,
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
+          name: "vendor",
           chunks: "all",
+        },
+        common: {
+          name: "common",
+          minChunk: 2,
+          chunks: "async",
+          priority: 10,
+          reuseExistingChunk: true,
+          enforce: true,
         },
       },
     },
