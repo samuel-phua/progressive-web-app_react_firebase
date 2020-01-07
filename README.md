@@ -1,4 +1,4 @@
-# Progressive Web App with React
+# Progressive Web App with React and Firebase
 
 ### Project Structure
 - build
